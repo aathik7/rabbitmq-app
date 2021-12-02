@@ -1,0 +1,15 @@
+
+docker build . -t aimvector/rabbitmq-publisher:v1.0.0
+
+docker run -it --rm --net rabbits -e RABBIT_HOST=rabbit-1 -e RABBIT_PORT=5672 -e RABBIT_USERNAME=guest -e RABBIT_PASSWORD=guest -p 80:80 aimvector/rabbitmq-publisher:v1.0.0
+
+docker build . -t aimvector/rabbitmq-consumer:v1.0.0
+
+docker run -it --rm --net rabbits -e RABBIT_HOST=rabbit-1 -e RABBIT_PORT=5672 -e RABBIT_USERNAME=guest -e RABBIT_PASSWORD=guest aimvector/rabbitmq-consumer:v1.0.0
+
+docker exec -it rabbit-1 bash
+
+docker rm -f rabbit-1 //for remove that container
+
+when publisher running go to postman and send request(message ) on port localhost:80/publish/hai now hai is a message to queue now go and check in rabbitmq
+rabbitmq will run in localhost:8080
